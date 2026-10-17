@@ -18,6 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -39,6 +41,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -78,6 +81,8 @@ fun BiodataScreen() {
     }
 }
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormContent(){
 
@@ -87,7 +92,9 @@ fun FormContent(){
     var birthDate by rememberSaveable { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
     var experience by rememberSaveable { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
 
+    val experienceOptions = stringArrayResource(R.array.experience_list)
     val selectedSkills = remember { mutableStateListOf<String>() }
     val fieldShape = RoundedCornerShape(dimensionResource(R.dimen.field_corner))
     val spacing = dimensionResource(R.dimen.spacing_medium)
@@ -158,6 +165,11 @@ fun FormContent(){
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
+                modifier = Modifier.weight(1f)
+            ) { }
         }
     }
 }
