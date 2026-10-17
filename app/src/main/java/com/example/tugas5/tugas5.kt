@@ -151,6 +151,15 @@ fun FormContent() {
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
+            OutlinedTextField(
+                value = lastName,
+                onValueChange = { lastName = it },
+                placeholder = { Text(stringResource(R.string.hint_last_name)) },
+                shape = fieldShape,
+                colors = fieldColors(),
+                singleLine = true,
+                modifier = Modifier.weight(1f)
+            )
         }
         Spacer(Modifier.height(spacing))
         OutlinedTextField(
