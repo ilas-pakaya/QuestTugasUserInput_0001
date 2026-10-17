@@ -9,4 +9,24 @@
     <string name="hint_experience">Experience</string>
     <string name="label_skill">Pilih Skill Anda :</string>
     <string name="btn_proceed">Proceed</string>
+
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Batal</string>
+    <string name="date_format" translatable="false">dd/MM/yyyy</string>
+    <string name="timezone_utc" translatable="false">UTC</string>
+    <string name="cd_header_image">Gambar header</string>
+    <string name="cd_calendar">Pilih tanggal</string>
+
+    <string-array name="experience_list">
+        <item>&lt; 1 Tahun</item>
+        <item>1 - 3 Tahun</item>
+        <item>3 - 5 Tahun</item>
+        <item>&gt; 5 Tahun</item>
+    </string-array>
+
+    <string-array name="skill_list">
+        <item>Android</item>
+        <item>UI/UX</item>
+        <item>Web</item>
+    </string-array>
 </resources>
