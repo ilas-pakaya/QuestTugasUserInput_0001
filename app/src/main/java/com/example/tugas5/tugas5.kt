@@ -15,6 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
@@ -186,14 +188,16 @@ fun FormContent(){
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded  = false }
-                ) {experienceOptions.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            experience = option
-                            expanded = false
-                        }
-                    )
+                ) {
+                    experienceOptions.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option) },
+                            onClick = {
+                                experience = option
+                                expanded = false
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -234,6 +238,23 @@ fun FormContent(){
         }
     }
     Spacer(Modifier.height(spacing))
+
+    Button(
+        onClick = { },
+        enabled = isFormValid,
+        shape = fieldShape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = colorResource(R.color.button_enabled),
+            contentColor = colorResource(R.color.button_text),
+            disabledContainerColor = colorResource(R.color.button_disabled),
+            disabledContentColor = colorResource(R.color.button_text)
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(dimensionResource(R.dimen.button_height))
+    ) {
+        Text(stringResource(R.string.btn_proceed), fontWeight = FontWeight.Bold)
+    }
 
 @Composable
 fun fieldColors() = OutlinedTextFieldDefaults.colors(
