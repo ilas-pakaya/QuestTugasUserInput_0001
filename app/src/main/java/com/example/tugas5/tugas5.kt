@@ -36,8 +36,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -63,38 +61,32 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun BiodataScreen() {
+fun BiodataScreen(modifier: Modifier = Modifier) {
     val cardShape = RoundedCornerShape(
         topStart = dimensionResource(R.dimen.card_corner),
         topEnd = dimensionResource(R.dimen.card_corner)
     )
-    Scaffold(containerColor = colorResource(R.color.screen_background)) { innerPadding ->
+
+    Box(modifier = modifier.fillMaxSize()) {
+        Image(
+            painter = painterResource(R.drawable.assasin),
+            contentDescription = stringResource(R.string.cd_header_image),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(dimensionResource(R.dimen.header_height))
+        )
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(top = dimensionResource(R.dimen.card_top_offset))
+                .shadow(dimensionResource(R.dimen.card_elevation), cardShape)
+                .background(colorResource(R.color.surface_card), cardShape)
         ) {
-            Image(
-                painter = painterResource(R.drawable.assasin),
-                contentDescription = stringResource(R.string.cd_header_image),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dimensionResource(R.dimen.header_height))
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = dimensionResource(R.dimen.card_top_offset))
-                    .shadow(dimensionResource(R.dimen.card_elevation), cardShape)
-                    .background(colorResource(R.color.surface_card), cardShape)
-            ) {
-                FormContent()
-            }
+            FormContent()
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
