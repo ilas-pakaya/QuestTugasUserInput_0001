@@ -1,7 +1,5 @@
 package com.example.tugas5
 
-import androidx.annotation.DimenRes
-import androidx.annotation.IdRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,13 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -27,7 +26,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -46,8 +44,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.sp
 
 @Composable
 fun BiodataScreen() {
@@ -85,7 +81,6 @@ fun BiodataScreen() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormContent(){
-
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -94,10 +89,15 @@ fun FormContent(){
     var experience by rememberSaveable { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
+    val skillOptions = stringArrayResource(R.array.skill_list)
     val experienceOptions = stringArrayResource(R.array.experience_list)
     val selectedSkills = remember { mutableStateListOf<String>() }
     val fieldShape = RoundedCornerShape(dimensionResource(R.dimen.field_corner))
     val spacing = dimensionResource(R.dimen.spacing_medium)
+
+    val isFormValid = firstName.isNotBlank() && lastName.isNotBlank() &&
+            email.isNotBlank() && birthDate.isNotBlank() &&
+            experience.isNotBlank() && selectedSkills.isNotEmpty()
 
     Column(
         modifier = Modifier
@@ -169,10 +169,43 @@ fun FormContent(){
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded },
                 modifier = Modifier.weight(1f)
-            ) { }
+            ) {
+                OutlinedTextField(
+                    value = experience,
+                    onValueChange = {},
+                    readOnly = true,
+                    placeholder = { Text(stringResource(R.string.hint_experience))},
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+                    shape = fieldShape,
+                    colors = fieldColors(),
+                    singleLine = true,
+                    modifier = Modifier.menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded  = false }
+                ) {experienceOptions.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option) },
+                        onClick = {
+                            experience = option
+                            expanded = false
+                        }
+                    )
+                }
+            }
         }
     }
-}
+    Spacer(Modifier.height(spacing))
+
+    Text(
+        text = stringResource(R.string.label_skill),
+        fontWeight = FontWeight.Bold,
+        fontSize = spResource(R.dimen.text_label),
+        color = colorResource(R.color.text_primary),
+        modifier = Modifier.fillMaxWidth()
+    )
+
 @Composable
 fun fieldColors() = OutlinedTextFieldDefaults.colors(
     focusedBorderColor = colorResource(R.color.purple_title),
@@ -183,5 +216,3 @@ fun fieldColors() = OutlinedTextFieldDefaults.colors(
     unfocusedContainerColor = colorResource(R.color.surface_card)
 )
 
-@Composable
-fun spResource(@DimenRes id: Int): TextUnit =dimensionResource(id).value.sp
