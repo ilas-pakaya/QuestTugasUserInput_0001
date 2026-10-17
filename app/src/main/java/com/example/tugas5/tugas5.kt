@@ -84,7 +84,7 @@ fun BiodataScreen() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FormContent(){
+fun FormContent() {
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -123,10 +123,12 @@ fun FormContent(){
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(vertical = dimensionResource(R.dimen.spacing_small))
         )
-        Spacer(Modifier.height(dimensionResource(R.dimen.spacing_large))
+        Spacer(
+            Modifier.height(dimensionResource(R.dimen.spacing_large))
         )
         Row(
-            horizontalArrangement = Arrangement.spacedBy(spacing)) {
+            horizontalArrangement = Arrangement.spacedBy(spacing)
+        ) {
             OutlinedTextField(
                 value = firstName,
                 onValueChange = { firstName = it },
@@ -140,8 +142,8 @@ fun FormContent(){
         Spacer(Modifier.height(spacing))
         OutlinedTextField(
             value = email,
-            onValueChange = {email = it},
-            placeholder = { Text(stringResource(R.string.hint_email))},
+            onValueChange = { email = it },
+            placeholder = { Text(stringResource(R.string.hint_email)) },
             shape = fieldShape,
             colors = fieldColors(),
             singleLine = true,
@@ -154,7 +156,7 @@ fun FormContent(){
                 value = birthDate,
                 onValueChange = {},
                 readOnly = true,
-                placeholder = {Text(stringResource(R.string.hint_birth_date))},
+                placeholder = { Text(stringResource(R.string.hint_birth_date)) },
                 trailingIcon = {
                     IconButton(onClick = { showDatePicker = true }) {
                         Icon(
@@ -178,7 +180,7 @@ fun FormContent(){
                     value = experience,
                     onValueChange = {},
                     readOnly = true,
-                    placeholder = { Text(stringResource(R.string.hint_experience))},
+                    placeholder = { Text(stringResource(R.string.hint_experience)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
                     shape = fieldShape,
                     colors = fieldColors(),
@@ -187,7 +189,7 @@ fun FormContent(){
                 )
                 ExposedDropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded  = false }
+                    onDismissRequest = { expanded = false }
                 ) {
                     experienceOptions.forEach { option ->
                         DropdownMenuItem(
@@ -201,59 +203,59 @@ fun FormContent(){
                 }
             }
         }
-    }
-    Spacer(Modifier.height(spacing))
+        Spacer(Modifier.height(spacing))
 
-    Text(
-        text = stringResource(R.string.label_skill),
-        fontWeight = FontWeight.Bold,
-        fontSize = spResource(R.dimen.text_label),
-        color = colorResource(R.color.text_primary),
-        modifier = Modifier.fillMaxWidth()
-    )
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        skillOptions.forEach { skill ->
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(
-                    checked = skill in selectedSkills,
-                    onCheckedChange = {
-                        if (it) selectedSkills.add(skill) else selectedSkills.remove(skill)
-                    },
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = colorResource(R.color.purple_title),
-                        uncheckedColor = colorResource(R.color.border_field),
-                        checkmarkColor = colorResource(R.color.button_text)
+        Text(
+            text = stringResource(R.string.label_skill),
+            fontWeight = FontWeight.Bold,
+            fontSize = spResource(R.dimen.text_label),
+            color = colorResource(R.color.text_primary),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            skillOptions.forEach { skill ->
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = skill in selectedSkills,
+                        onCheckedChange = {
+                            if (it) selectedSkills.add(skill) else selectedSkills.remove(skill)
+                        },
+                        colors = CheckboxDefaults.colors(
+                            checkedColor = colorResource(R.color.purple_title),
+                            uncheckedColor = colorResource(R.color.border_field),
+                            checkmarkColor = colorResource(R.color.button_text)
+                        )
                     )
-                )
-                Text(
-                    text = skill,
-                    fontSize = spResource(R.dimen.text_checkbox),
-                    color = colorResource(R.color.text_primary)
-                )
+                    Text(
+                        text = skill,
+                        fontSize = spResource(R.dimen.text_checkbox),
+                        color = colorResource(R.color.text_primary)
+                    )
+                }
             }
         }
-    }
-    Spacer(Modifier.height(spacing))
+        Spacer(Modifier.height(spacing))
 
-    Button(
-        onClick = { },
-        enabled = isFormValid,
-        shape = fieldShape,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(R.color.button_enabled),
-            contentColor = colorResource(R.color.button_text),
-            disabledContainerColor = colorResource(R.color.button_disabled),
-            disabledContentColor = colorResource(R.color.button_text)
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(dimensionResource(R.dimen.button_height))
-    ) {
-        Text(stringResource(R.string.btn_proceed), fontWeight = FontWeight.Bold)
+        Button(
+            onClick = { },
+            enabled = isFormValid,
+            shape = fieldShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = colorResource(R.color.button_enabled),
+                contentColor = colorResource(R.color.button_text),
+                disabledContainerColor = colorResource(R.color.button_disabled),
+                disabledContentColor = colorResource(R.color.button_text)
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(dimensionResource(R.dimen.button_height))
+        ) {
+            Text(stringResource(R.string.btn_proceed), fontWeight = FontWeight.Bold)
+        }
     }
 
 @Composable
