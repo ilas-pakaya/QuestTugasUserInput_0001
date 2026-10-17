@@ -15,6 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -205,6 +207,33 @@ fun FormContent(){
         color = colorResource(R.color.text_primary),
         modifier = Modifier.fillMaxWidth()
     )
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        skillOptions.forEach { skill ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = skill in selectedSkills,
+                    onCheckedChange = {
+                        if (it) selectedSkills.add(skill) else selectedSkills.remove(skill)
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = colorResource(R.color.purple_title),
+                        uncheckedColor = colorResource(R.color.border_field),
+                        checkmarkColor = colorResource(R.color.button_text)
+                    )
+                )
+                Text(
+                    text = skill,
+                    fontSize = spResource(R.dimen.text_checkbox),
+                    color = colorResource(R.color.text_primary)
+                )
+            }
+        }
+    }
+    Spacer(Modifier.height(spacing))
 
 @Composable
 fun fieldColors() = OutlinedTextFieldDefaults.colors(
