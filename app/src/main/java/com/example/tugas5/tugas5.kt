@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
@@ -82,9 +85,10 @@ fun FormContent(){
     var lastName by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var birthDate by rememberSaveable { mutableStateOf("") }
+    var showDatePicker by remember { mutableStateOf(false) }
     var experience by rememberSaveable { mutableStateOf("") }
-    val selectedSkills = remember { mutableStateListOf<String>() }
 
+    val selectedSkills = remember { mutableStateListOf<String>() }
     val fieldShape = RoundedCornerShape(dimensionResource(R.dimen.field_corner))
     val spacing = dimensionResource(R.dimen.spacing_medium)
 
@@ -134,6 +138,23 @@ fun FormContent(){
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(Modifier.height(spacing))
+        Row(horizontalArrangement = Arrangement.spacedBy(spacing)) {
+            OutlinedTextField(
+                value = birthDate,
+                onValueChange = {},
+                readOnly = true,
+                placeholder = {Text(stringResource(R.string.hint_birth_date))},
+                trailingIcon = {
+                    IconButton(onClick = { showDatePicker = true }) {
+                        Icon(
+                            painter = painterResource(R.drawable.icon_calender),
+                            contentDescription = stringResource(R.string.cd_calendar),
+                            modifier = Modifier.size(dimensionResource(R.dimen.icon_size))
+                        )
+                    }
+                }
+            )
+        }
     }
 }
 @Composable
