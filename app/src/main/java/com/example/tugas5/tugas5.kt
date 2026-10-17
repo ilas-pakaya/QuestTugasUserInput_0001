@@ -152,7 +152,11 @@ fun FormContent(){
                             modifier = Modifier.size(dimensionResource(R.dimen.icon_size))
                         )
                     }
-                }
+                },
+                shape = fieldShape,
+                colors = fieldColors(),
+                singleLine = true,
+                modifier = Modifier.weight(1f)
             )
         }
     }
