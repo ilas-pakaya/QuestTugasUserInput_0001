@@ -18,6 +18,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -64,6 +70,17 @@ fun BiodataScreen() {
 
 @Composable
 fun FormContent(){
+
+    var firstName by rememberSaveable { mutableStateOf("") }
+    var lastName by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var birthDate by rememberSaveable { mutableStateOf("") }
+    var experience by rememberSaveable { mutableStateOf("") }
+    val selectedSkills = remember { mutableStateListOf<String>() }
+
+    val fieldShape = RoundedCornerShape(dimensionResource(R.dimen.field_corner))
+    val spacing = dimensionResource(R.dimen.spacing_medium)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
