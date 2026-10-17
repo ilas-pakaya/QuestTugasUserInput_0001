@@ -64,6 +64,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun BiodataScreen() {
+    val cardShape = RoundedCornerShape(
+        topStart = dimensionResource(R.dimen.card_corner),
+        topEnd = dimensionResource(R.dimen.card_corner)
+    )
     Scaffold(containerColor = colorResource(R.color.screen_background)) { innerPadding ->
         Box(
             modifier = Modifier
@@ -78,15 +82,12 @@ fun BiodataScreen() {
                     .fillMaxWidth()
                     .height(dimensionResource(R.dimen.header_height))
             )
-            Surface(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = dimensionResource(R.dimen.card_top_offset)),
-                color = colorResource(R.color.surface_card),
-                shape = RoundedCornerShape(
-                    topStart = dimensionResource(R.dimen.card_corner),
-                ),
-                shadowElevation = dimensionResource(R.dimen.card_elevation)
+                    .padding(top = dimensionResource(R.dimen.card_top_offset))
+                    .shadow(dimensionResource(R.dimen.card_elevation), cardShape)
+                    .background(colorResource(R.color.surface_card), cardShape)
             ) {
                 FormContent()
             }
