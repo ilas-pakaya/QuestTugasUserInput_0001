@@ -1,5 +1,13 @@
 package com.example.tugas5
 
+import androidx.compose.foundation.background
+import androidx.compose.material3.DatePicker
+import androidx.compose.ui.draw.shadow
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
+import androidx.annotation.DimenRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +27,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -30,6 +39,8 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -48,6 +59,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun BiodataScreen() {
@@ -58,7 +71,7 @@ fun BiodataScreen() {
                 .padding(innerPadding)
         ) {
             Image(
-                painter = painterResource(R.drawable.Assasin),
+                painter = painterResource(R.drawable.assasin),
                 contentDescription = stringResource(R.string.cd_header_image),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -258,6 +271,29 @@ fun FormContent() {
         }
     }
 
+    if (showDatePicker) {
+        val datePickerState = rememberDatePickerState()
+        val dateFormat = SimpleDateFormat(stringResource(R.string.date_format), Locale.getDefault())
+            .apply { timeZone = TimeZone.getTimeZone(stringResource(R.string.timezone_utc)) }
+
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        birthDate = dateFormat.format(Date(it))
+                    }
+                    showDatePicker = false
+                }) { Text(stringResource(R.string.btn_ok)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text(stringResource(R.string.btn_cancel))
+                }
+            }
+        ) { DatePicker(state = datePickerState) }
+    }
+}
 @Composable
 fun fieldColors() = OutlinedTextFieldDefaults.colors(
     focusedBorderColor = colorResource(R.color.purple_title),
@@ -267,4 +303,7 @@ fun fieldColors() = OutlinedTextFieldDefaults.colors(
     focusedContainerColor = colorResource(R.color.surface_card),
     unfocusedContainerColor = colorResource(R.color.surface_card)
 )
+
+@Composable
+fun spResource(@DimenRes id: Int): TextUnit = dimensionResource(id).value.sp
 
