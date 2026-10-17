@@ -41,8 +41,9 @@ fun BiodataScreen() {
                     .padding(top = dimensionResource(R.dimen.card_top_offset)),
                 color = colorResource(R.color.surface_card),
                 shape = RoundedCornerShape(
-                    topStart = dimensionResource(R.dimen.card_corner)
-                )
+                    topStart = dimensionResource(R.dimen.card_corner),
+                ),
+                shadowElevation = dimensionResource(R.dimen.card_elevation)
             ) {
                 FormContent()
             }
